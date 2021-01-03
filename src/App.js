@@ -39,7 +39,11 @@ const columns = [{
 class App extends Component {
     constructor(props) {
       super(props);
-      this.state = { ethereumAddress: '', transactions: [] };
+      this.state = { errorMsg: '',
+        ethereumAddress: '',
+        loading: false,
+        transactions: []
+      };
 
       this.handleChange = this.handleChange.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
@@ -47,20 +51,25 @@ class App extends Component {
 
     async handleChange(event) {
       this.setState({
-        loading: true
+        errorMsg: '',
+        ethereumAddress: '',
+        loading: true,
+        transactions: []
       });
       const { status, result } = await fetch(`https://api.etherscan.io/api?module=account&action=txlist&address=${event.target.value}&startblock=0&endblock=99999999&sort=asc&apikey=${apikey}`).then(response => response.json())
       if (status === "1") {
         this.setState({
+          errorMsg: '',
           ethereumAddress: event.target.value,
           loading: false,
           transactions: result.slice(0, 10000)
         });
-      }
-      else {
+      } else {
         this.setState({
           errorMsg: result,
-          loading: false
+          ethereumAddress: '',
+          loading: false,
+          transactions: []
         });
       }
     }
@@ -79,14 +88,14 @@ class App extends Component {
               </Form.Group>
             </Form>
             { this.state.loading ?
-                (<div class="spinner-wrapper">
-                  <div class="spinner-border" role="status">
-                    <span class="sr-only">Loading...</span>
+                (<div className="spinner-wrapper">
+                  <div className="spinner-border" role="status">
+                    <span className="sr-only">Loading...</span>
                   </div>
                 </div>) : 
                 this.state.errorMsg ?
                   (<p>{ this.state.errorMsg }</p>) : 
-                  (<BootstrapTable keyField='timestamp' data={ this.state.transactions } columns={ columns } />)
+                  (<BootstrapTable keyField='timeStamp' data={ this.state.transactions } columns={ columns } />)
             }
           </div>
         </div>
