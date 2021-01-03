@@ -1,0 +1,39 @@
+.caret {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  margin-left: 2px;
+  vertical-align: middle;
+  border-top: 4px dashed;
+  border-top: 4px solid \9;
+  border-right: 4px solid transparent;
+  border-left: 4px solid transparent;
+}
+
+.dropup .caret, .navbar-fixed-bottom .dropdown .caret {
+  border-top: 0;
+  border-bottom: 4px dashed;
+  border-bottom: 4px solid \9;
+  content: "";
+}
+
+.spinner-wrapper {
+  text-align: center;
+}
+
+.App {
+  background-color: #282c34;
+  color: white;
+  /*font-size: calc(10px + 2vmin);*/
+  min-height: 100vh;
+  padding: 50px 100px;
+}
+
+.App-inner table {
+  color: white !important;
+}
+
+.App-inner table th, .App-inner table td {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
